@@ -1,15 +1,24 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 
 export default function Home(props) {
   const { citiesList } = props;
+  const [filteredName, setFilteredName] = useState('');
+
+  const handleFilterName = event => {
+      const inputValue = event.currentTarget.value;
+      setFilteredName(inputValue);
+  }
 
   return (
     <HomeSection>
       <HomeTitle>Como estan nuestras ciudades de contaminadas?</HomeTitle>
+      <input type="text" onChange={handleFilterName}></input>
       <CitiesListContainer>
         {citiesList &&
-          citiesList.map((city) => {
+          citiesList
+          .filter(item => item.name.toUpperCase().includes(filteredName.toUpperCase()))
+          .map((city) => {
             return (
               <CityContainer key={city.id}>
                 <p>{city.name}</p>
