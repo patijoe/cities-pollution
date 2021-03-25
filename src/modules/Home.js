@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import styled from "styled-components";
+import Filter from './Filter';
 
 export default function Home(props) {
   const { citiesList } = props;
@@ -13,7 +14,7 @@ export default function Home(props) {
   return (
     <HomeSection>
       <HomeTitle>Como estan nuestras ciudades de contaminadas?</HomeTitle>
-      <input type="text" onChange={handleFilterName}></input>
+      <Filter handleFilterName = {handleFilterName} />
       <CitiesListContainer>
         {citiesList &&
           citiesList
