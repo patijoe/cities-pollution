@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import {CITIES_API} from './services';
+import {INTERVAL_SECONDS} from './utils/constants';
 
 export default function App() {
-  const INTERVAL_SECONDS = 10 * 1000;
   const [citiesList, setCitiesList] = useState("");
 
   useEffect(() => {
     const interval = setInterval(() => {
-      fetch("http://localhost:9000/cities")
+      fetch(CITIES_API)
       .then((response) => response.json())
       .then((response) => setCitiesList(response));
     }, INTERVAL_SECONDS);
