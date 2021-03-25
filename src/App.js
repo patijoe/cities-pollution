@@ -1,46 +1,28 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
 
-class App extends Component {
-  constructor(props) {
-    super(props);
+export default function App() {
+  const [citiesList, setCitiesList] = useState("");
 
-    this.state = {
-      apiResponse: ''
-    }
-  }
+  useEffect(() => getCities(), []);
 
-  callAPI() {
-    fetch('http://localhost:9000/cities')
-      .then(response => response.json())
-      .then(response => this.setState({
-        apiResponse: response
-      }))
+  const getCities = () => {
+    fetch("http://localhost:9000/cities")
+      .then((response) => response.json())
+      .then((response) => setCitiesList(response));
   };
 
-  componentDidMount() {
-    this.callAPI();
-  }
-
-  render() {
-    const {apiResponse} = this.state;
-    console.log('---------', apiResponse);
-
-    return (
-      <div className="App">
-        {apiResponse && apiResponse.map(item => {
-          return(
-            <div key={item.id}>
-              <p>{item.id}</p>
-              <p>{item.name}</p>
-            </div>     
-          );}
-        )}
-      </div>
-    );
-  }
+  return (
+    <div className="App">
+      {citiesList &&
+        citiesList.map((city) => {
+          return (
+            <div key={city.id}>
+              <p>{city.id}</p>
+              <p>{city.name}</p>
+            </div>
+          );
+        })}
+    </div>
+  );
 }
-    
-    
-export default App;
