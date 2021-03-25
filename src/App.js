@@ -1,46 +1,40 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import { Switch, Route, BrowserRouter } from "react-router-dom";
+import { CITIES_API } from "./services";
+import { INTERVAL_SECONDS } from "./utils/constants";
+import Home from "./modules/Home";
 
-class App extends Component {
-  constructor(props) {
-    super(props);
+export default function App() {
+  const [citiesList, setCitiesList] = useState("");
 
-    this.state = {
-      apiResponse: ''
-    }
-  }
+  useEffect(() => {
+    fetch(CITIES_API)
+        .then((response) => response.json())
+        .then((response) => setCitiesList(response));
+        
+    const interval = setInterval(() => {
+      fetch(CITIES_API)
+        .then((response) => response.json())
+        .then((response) => setCitiesList(response));
+    }, INTERVAL_SECONDS);
 
-  callAPI() {
-    fetch('http://localhost:9000/cities')
-      .then(response => response.json())
-      .then(response => this.setState({
-        apiResponse: response
-      }))
-  };
+    return () => clearInterval(interval);
+  }, []);
 
-  componentDidMount() {
-    this.callAPI();
-  }
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" render={() => <Home citiesList={citiesList} />} />
 
-  render() {
-    const {apiResponse} = this.state;
-    console.log('---------', apiResponse);
-
-    return (
-      <div className="App">
-        {apiResponse && apiResponse.map(item => {
-          return(
-            <div key={item.id}>
-              <p>{item.id}</p>
-              <p>{item.name}</p>
-            </div>     
-          );}
-        )}
-      </div>
-    );
-  }
+        {/* <Route 
+            path = "/:id"
+            render = {(routerProps) => (
+              <CityDetails
+              match={routerProps.match}
+              />
+              )}
+            /> */}
+      </Switch>
+    </BrowserRouter>
+  );
 }
-    
-    
-export default App;
