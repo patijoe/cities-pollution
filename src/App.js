@@ -8,18 +8,25 @@ export default function App() {
   const [citiesList, setCitiesList] = useState("");
 
   useEffect(() => {
-    fetch(CITIES_API)
-        .then((response) => response.json())
-        .then((response) => setCitiesList(response));
-        
+    getOrderedCities();
+
     const interval = setInterval(() => {
-      fetch(CITIES_API)
-        .then((response) => response.json())
-        .then((response) => setCitiesList(response));
+      getOrderedCities();
     }, INTERVAL_SECONDS);
 
     return () => clearInterval(interval);
   }, []);
+
+  const getOrderedCities = () => {
+    fetch(CITIES_API)
+      .then((response) => response.json())
+      .then((response) => {
+        const sortedCitiesList = response.sort((a, b) =>
+          a.level > b.level ? 1 : -1
+        );
+        setCitiesList(sortedCitiesList);
+      });
+  };
 
   return (
     <BrowserRouter>
