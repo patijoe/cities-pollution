@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
+import styled from "styled-components";
 
 export default function App() {
   const [citiesList, setCitiesList] = useState("");
@@ -13,7 +13,7 @@ export default function App() {
   };
 
   return (
-    <div className="App">
+    <AppSection>
       {citiesList &&
         citiesList.map((city) => {
           return (
@@ -23,6 +23,11 @@ export default function App() {
             </div>
           );
         })}
-    </div>
+    </AppSection>
   );
 }
+
+const AppSection = styled.div`
+  text-align: center;
+  color: red;
+`;
