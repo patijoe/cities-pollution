@@ -1,32 +1,40 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import Filter from './Filter';
+import Filter from "./Filter";
 
 export default function Home(props) {
   const { citiesList } = props;
-  const [filteredName, setFilteredName] = useState('');
+  const [filteredName, setFilteredName] = useState("");
 
-  const handleFilterName = event => {
-      const inputValue = event.currentTarget.value;
-      setFilteredName(inputValue);
-  }
+  const handleFilterName = (event) => {
+    const inputValue = event.currentTarget.value;
+    setFilteredName(inputValue);
+  };
+
+  const getTopTenCities = () => {
+    const topTenCities =
+      citiesList && citiesList
+      .filter((item) =>
+        item.name.toUpperCase().includes(filteredName.toUpperCase())
+      );
+
+    return topTenCities.slice(0, 10);
+  };
 
   return (
     <HomeSection>
       <HomeTitle>Como estan nuestras ciudades de contaminadas?</HomeTitle>
-      <Filter handleFilterName = {handleFilterName} />
+      <Filter handleFilterName={handleFilterName} />
       <CitiesListContainer>
-        {citiesList &&
-          citiesList
-          .filter(item => item.name.toUpperCase().includes(filteredName.toUpperCase()))
-          .map((city) => {
-            return (
-              <CityContainer key={city.id}>
-                <p>{city.name}</p>
-                <p>{city.level}</p>
-              </CityContainer>
-            );
-          })}
+        {getTopTenCities() && getTopTenCities()
+        .map((city) => {
+          return (
+            <CityContainer key={city.id}>
+              <p>{city.name}</p>
+              <p>{city.level}</p>
+            </CityContainer>
+          );
+        })}
       </CitiesListContainer>
     </HomeSection>
   );

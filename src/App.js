@@ -23,7 +23,7 @@ export default function App() {
       .then((response) => {
         const sortedCitiesList = response.sort((a, b) =>
           a.level > b.level ? 1 : -1
-        );
+        ).reverse();
         setCitiesList(sortedCitiesList);
       });
   };
