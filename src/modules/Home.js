@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import Filter from "./Filter";
 
@@ -6,48 +6,58 @@ export default function Home(props) {
   const { citiesList } = props;
   const [cities, setCities] = useState([]);
   const [filteredName, setFilteredName] = useState("");
+  const [optionSelected, setOptionSelected] = useState("pollution_ascendent");
+
+  const setTopTenCities = useCallback((unfilteredCities) => {
+    const filteredCities = unfilteredCities.filter((item) =>
+      item.name.toUpperCase().includes(filteredName.toUpperCase())
+    );
+
+    const topTenCities = truncateArray(filteredCities, 10);
+
+    setCities(topTenCities);
+  }, [filteredName]);
+
+  const getDescendetOrderedCities = useCallback(() => {
+    const sortedCitiesList =
+      citiesList && citiesList.sort((a, b) => b.level - a.level);
+
+    setTopTenCities(sortedCitiesList);
+    return sortedCitiesList;
+  }, [citiesList, setTopTenCities]);
+
+  const getAscendetOrderedCities = useCallback(() => {
+    const sortedCitiesList =
+      citiesList && citiesList.sort((a, b) => a.level - b.level);
+
+    setTopTenCities(sortedCitiesList);
+    return sortedCitiesList;
+  }, [citiesList, setTopTenCities]);
 
   useEffect(() => {
-    setCities(truncateArray(citiesList, 10));
-  }, [citiesList]);
+    console.log(citiesList)
+    if (optionSelected === "pollution_ascendent") {
+      setCities(truncateArray(getAscendetOrderedCities(), 10));
+    } else {
+      setCities(truncateArray(getDescendetOrderedCities(), 10));
+    }
+  }, [citiesList, optionSelected, getAscendetOrderedCities, getDescendetOrderedCities]);
 
   const handleFilterName = (event) => {
     const inputValue = event.currentTarget.value;
     setFilteredName(inputValue);
   };
 
-  const setTopTenCities = (unfilteredCities) => {
-    const filteredCities = unfilteredCities.filter((item) =>
-      item.name.toUpperCase().includes(filteredName.toUpperCase())
-    );
-
-    const topTenCities = truncateArray(filteredCities, 10)
-
-    setCities(topTenCities);
-  };
-
   const handleSelect = (event) => {
+    setOptionSelected(event.target.value);
+
     event.target.value === "pollution_ascendent"
       ? getAscendetOrderedCities()
       : getDescendetOrderedCities();
   };
 
-  const getDescendetOrderedCities = () => {
-    const sortedCitiesList =
-      citiesList && citiesList.sort((a, b) => a.level - b.level);
-
-    setTopTenCities(sortedCitiesList);
-  };
-
-  const getAscendetOrderedCities = () => {
-    const sortedCitiesList =
-      citiesList && citiesList.sort((a, b) => b.level - a.level);
-
-    setTopTenCities(sortedCitiesList);
-  };
-
-  const truncateArray = (array, length) => {
-    return array.slice(0, length);
+  const truncateArray = (arr, length) => {
+    return arr && arr.slice(0, length);
   };
 
   return (
