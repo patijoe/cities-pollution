@@ -1,40 +1,77 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Filter from "./Filter";
 
 export default function Home(props) {
   const { citiesList } = props;
+  const [cities, setCities] = useState([]);
   const [filteredName, setFilteredName] = useState("");
+
+  useEffect(() => {
+    setCities(truncateArray(citiesList, 10));
+  }, [citiesList]);
 
   const handleFilterName = (event) => {
     const inputValue = event.currentTarget.value;
     setFilteredName(inputValue);
   };
 
-  const getTopTenCities = () => {
-    const topTenCities =
-      citiesList && citiesList
-      .filter((item) =>
-        item.name.toUpperCase().includes(filteredName.toUpperCase())
-      );
+  const setTopTenCities = (unfilteredCities) => {
+    const filteredCities = unfilteredCities.filter((item) =>
+      item.name.toUpperCase().includes(filteredName.toUpperCase())
+    );
 
-    return topTenCities.slice(0, 10);
+    const topTenCities = truncateArray(filteredCities, 10)
+
+    setCities(topTenCities);
+  };
+
+  const handleSelect = (event) => {
+    event.target.value === "pollution_ascendent"
+      ? getAscendetOrderedCities()
+      : getDescendetOrderedCities();
+  };
+
+  const getDescendetOrderedCities = () => {
+    const sortedCitiesList =
+      citiesList && citiesList.sort((a, b) => a.level - b.level);
+
+    setTopTenCities(sortedCitiesList);
+  };
+
+  const getAscendetOrderedCities = () => {
+    const sortedCitiesList =
+      citiesList && citiesList.sort((a, b) => b.level - a.level);
+
+    setTopTenCities(sortedCitiesList);
+  };
+
+  const truncateArray = (array, length) => {
+    return array.slice(0, length);
   };
 
   return (
     <HomeSection>
       <HomeTitle>Como estan nuestras ciudades de contaminadas?</HomeTitle>
       <Filter handleFilterName={handleFilterName} />
+      <select name="sort" onChange={handleSelect}>
+        <option value="pollution_ascendent">
+          Menor a mayor contamincación
+        </option>
+        <option value="pollution_descendent">
+          Mayor a menor contamincación
+        </option>
+      </select>
       <CitiesListContainer>
-        {getTopTenCities() && getTopTenCities()
-        .map((city) => {
-          return (
-            <CityContainer key={city.id}>
-              <p>{city.name}</p>
-              <p>{city.level}</p>
-            </CityContainer>
-          );
-        })}
+        {cities &&
+          cities.map((city) => {
+            return (
+              <CityContainer key={city.id}>
+                <p>{city.name}</p>
+                <p>{city.level}</p>
+              </CityContainer>
+            );
+          })}
       </CitiesListContainer>
     </HomeSection>
   );

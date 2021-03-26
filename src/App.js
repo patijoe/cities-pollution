@@ -5,31 +5,29 @@ import { INTERVAL_SECONDS } from "./utils/constants";
 import Home from "./modules/Home";
 
 export default function App() {
-  const [citiesList, setCitiesList] = useState("");
+  const [citiesList, setCitiesList] = useState([]);
 
   useEffect(() => {
-    getOrderedCities();
+    getCities();
 
     const interval = setInterval(() => {
-      getOrderedCities();
+      getCities();
     }, INTERVAL_SECONDS);
 
     return () => clearInterval(interval);
   }, []);
 
-  const getOrderedCities = () => {
+  const getCities = () => {
     fetch(CITIES_API)
       .then((response) => response.json())
       .then((response) => {
-        const sortedCitiesList = response.sort((a, b) =>
-          a.level > b.level ? 1 : -1
-        ).reverse();
-        setCitiesList(sortedCitiesList);
+        setCitiesList(response);
       });
+      
   };
 
   return (
-    <BrowserRouter>
+    citiesList.length && <BrowserRouter>
       <Switch>
         <Route exact path="/" render={() => <Home citiesList={citiesList} />} />
 
