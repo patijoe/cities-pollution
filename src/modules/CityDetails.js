@@ -1,22 +1,25 @@
 import React from 'react';
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
 
 
 function CityMap(props) {
     const {citiesList} = props;
     const cityId = props.match.params.cityId;
-
-    console.log('citiesList', citiesList);
-    console.log('cityId', cityId);
     
     const citySelected = citiesList.find(city => city.id === cityId);
-    
-    console.log('citySelected', citySelected);
-
 
     return(
-        <Map google={props.google} zoom={14}>
- 
+        <Map 
+            google={props.google} 
+            zoom={8}
+            initialCenter={{
+                lat: citySelected.coordinates.latitude,
+                lng: citySelected.coordinates.longitude
+              }}
+        >
+            <Marker 
+                position={{ lat: citySelected.coordinates.latitude, lng: citySelected.coordinates.longitude }} 
+            />
       </Map>
     )
 }
