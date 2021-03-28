@@ -3,6 +3,7 @@ import { Switch, Route, BrowserRouter } from "react-router-dom";
 import { CITIES_API } from "./services";
 import { INTERVAL_SECONDS } from "./utils/constants";
 import Home from "./modules/Home";
+import CityDetails from './modules/CityDetails';
 
 export default function App() {
   const [citiesList, setCitiesList] = useState([]);
@@ -29,16 +30,23 @@ export default function App() {
   return (
     citiesList.length && <BrowserRouter>
       <Switch>
-        <Route exact path="/" render={() => <Home citiesList={citiesList} />} />
+        <Route 
+          exact 
+          path="/" 
+          render={() => 
+            <Home citiesList={citiesList} />
+          } 
+        />
 
-        {/* <Route 
-            path = "/:id"
+        <Route 
+            path = "/:cityId"
             render = {(routerProps) => (
               <CityDetails
-              match={routerProps.match}
+                match={routerProps.match}
+                citiesList={citiesList}
               />
               )}
-            /> */}
+            />
       </Switch>
     </BrowserRouter>
   );

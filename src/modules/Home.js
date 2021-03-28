@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { Link } from 'react-router-dom';
+
 import styled from "styled-components";
 import Filter from "./Filter";
 import Order from "./Order";
@@ -20,7 +22,6 @@ export default function Home(props) {
     },
     [filteredName]
   );
-  console.log("cities", cities);
 
   const getDescendetOrderedCities = useCallback(() => {
     const sortedCitiesList =
@@ -77,7 +78,7 @@ export default function Home(props) {
         {cities &&
           cities.map((city) => {
             return (
-              <CityContainer key={city.id}>
+              <CityContainer key={city.id} to={`/${city.id}`}>
                 <CityDescription>
                   <CityTitle>{city.name}</CityTitle>
                   <p>{city.level}</p>
@@ -101,8 +102,8 @@ const HomeSection = styled.div`
 const CitiesListContainer = styled.div`
   align-items: center;
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
+  justify-content: center;
   max-width: 1000px;
 `;
 
@@ -110,13 +111,14 @@ const HomeTitle = styled.h1`
   color: grey;
 `;
 
-const CityContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
+const CityContainer = styled(Link)`
   background-color: rgba(grey, 0.3);
   border: 1px solid grey;
   border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
   margin: 10px;
+  text-decoration: none;
   width: 300px;
 `;
 
