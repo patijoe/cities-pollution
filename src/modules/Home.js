@@ -12,8 +12,8 @@ export default function Home(props) {
   const setTopTenCities = useCallback(
     (unfilteredCities) => {
       const filteredCities = unfilteredCities.filter((item) =>
-          item.name.toUpperCase().includes(filteredName.toUpperCase())
-        );
+        item.name.toUpperCase().includes(filteredName.toUpperCase())
+      );
 
       const topTenCities = truncateArray(filteredCities, 10);
       return topTenCities;
@@ -23,7 +23,6 @@ export default function Home(props) {
   console.log("cities", cities);
 
   const getDescendetOrderedCities = useCallback(() => {
-
     const sortedCitiesList =
       citiesList && citiesList.sort((a, b) => b.level - a.level);
 
@@ -35,8 +34,8 @@ export default function Home(props) {
     const sortedCitiesList =
       citiesList && citiesList.sort((a, b) => a.level - b.level);
 
-      const orderedTenCities = setTopTenCities(sortedCitiesList);
-      return orderedTenCities;
+    const orderedTenCities = setTopTenCities(sortedCitiesList);
+    return orderedTenCities;
   }, [citiesList, setTopTenCities]);
 
   useEffect(() => {
@@ -83,7 +82,7 @@ export default function Home(props) {
                   <CityTitle>{city.name}</CityTitle>
                   <p>{city.level}</p>
                 </CityDescription>
-                {city.image && <CityImage src={city.image} />}
+                <CityImage imgUrl={city.image}></CityImage>
               </CityContainer>
             );
           })}
@@ -113,17 +112,18 @@ const HomeTitle = styled.h1`
 
 const CityContainer = styled.div`
   display: flex;
+  justify-content: space-between;
   background-color: rgba(grey, 0.3);
   border: 1px solid grey;
   border-radius: 5px;
   margin: 10px;
-  padding: 15px;
   width: 300px;
 `;
 
 const CityDescription = styled.div`
   display: flex;
   flex-direction: column;
+  padding: 15px;
 `;
 
 const CityTitle = styled.h2`
@@ -131,6 +131,11 @@ const CityTitle = styled.h2`
   margin: 0;
 `;
 
-const CityImage = styled.img`
-width: 100px;
+const CityImage = styled.div`
+  background-image: ${(props) => `url(${props.imgUrl})`};
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 110px;
+  width: 110px;
 `;
