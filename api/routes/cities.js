@@ -11,7 +11,8 @@ router.get("/", function (req, res, next) {
       coordinates: {
         latitude: 40.4189,
         longitude: -3.6919
-      }
+      },
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOr4agc_YBWFehp576QA4BDjqh7CcjowPSWg&usqp=CAU"
     },
     {
       id: "2",
@@ -21,7 +22,8 @@ router.get("/", function (req, res, next) {
       coordinates: {
         latitude: 41.3825,
         longitude:	2.1769
-      }
+      },
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEtokd86r7xsGpK-bR5spyLGK9cZU-sRB5bA&usqp=CAU"
     },
     {
       id: "3",
@@ -31,7 +33,8 @@ router.get("/", function (req, res, next) {
       coordinates: {
         latitude: 38.7452,
         longitude: -9.1604
-      }
+      },
+      image: "https://afar-production.imgix.net/uploads/syndication/holland_americas/images/drWJHdicti/original_ESY-011297320crop.jpg?w=750&h=563&fit=crop"
     },
     {
       id: "4",
@@ -41,7 +44,8 @@ router.get("/", function (req, res, next) {
       coordinates: {
         latitude: 48.8566,
         longitude: 2.3522
-      }
+      },
+      image: "https://img.huffingtonpost.com/asset/5e1d9c4c2100003000af8d0c.jpeg?cache=5aaxY3NirQ&ops=scalefit_720_noupscale"
     },
     {
       id: "5",
@@ -51,7 +55,8 @@ router.get("/", function (req, res, next) {
       coordinates: {
         latitude: 50.8467,
         longitude: 4.3517
-      }
+      },
+      image: "https://static.brusselsairlines.com/_img/destinationPage2/Belgium/Brussels/Brussels_grand_place.jpg"
     },
     {
       id: "6",
@@ -61,7 +66,8 @@ router.get("/", function (req, res, next) {
       coordinates: {
         latitude: 46.9480,
         longitude: 7.4474
-      }
+      },
+      image: "https://cdn.alberguesjuveniles.es/city_images/Switzerland/bern.jpg"
     },
     {
       id: "7",
@@ -71,7 +77,8 @@ router.get("/", function (req, res, next) {
       coordinates: {
         latitude: 52.3500,
         longitude: 4.9166
-      }
+      },
+      image: "https://www.holland.com/upload_mm/d/0/7/69550_fullimage_fietsen-amsterdam_1360x.jpg"
     },
     {
       id: "8",
