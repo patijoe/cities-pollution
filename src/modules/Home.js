@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 import styled from "styled-components";
 import Filter from "./Filter";
@@ -69,16 +69,59 @@ export default function Home(props) {
     return arr && arr.slice(0, length);
   };
 
+  const getBorderColor = (levelPollution, opacity) => {
+    if (levelPollution >= 0 && levelPollution <= 3) {
+      return `rgba(134, 226, 213, ${opacity})`;
+    } else if (levelPollution > 3 && levelPollution <= 6) {
+      return `rgba(250, 190, 88, ${opacity})`;
+    }
+    return `rgba(217, 30, 24, ${opacity})`;
+  };
+
+  const legend = [
+    {
+      color: "rgba(134, 226, 213, 0.3)",
+      text: "Nivel bajo de contaminación",
+    },
+    {
+      color: "rgba(250, 190, 88,  0.3)",
+      text: "Nivel medio de contaminación",
+    },
+    {
+      color: "rgba(217, 30, 24, 0.3)",
+      text: "Nivel alto de contaminación",
+    },
+  ];
+
   return (
     <HomeSection>
       <HomeTitle>Como estan nuestras ciudades de contaminadas?</HomeTitle>
-      <Filter handleFilterName={handleFilterName} />
-      <Order handleSelect={handleSelect} />
+      <ActionsContainer>
+        <Filter handleFilterName={handleFilterName} />
+        <Order handleSelect={handleSelect} />
+      </ActionsContainer>
+      <LeyendContainer>
+        {legend.map((item) => {
+          return (
+            <LeyendItem>
+              <ColorBox colorbox={item.color} />
+              <LegendText>{item.text}</LegendText>
+            </LeyendItem>
+          );
+        })}
+      </LeyendContainer>
+      <HorizontalRow />
       <CitiesListContainer>
         {cities &&
           cities.map((city) => {
             return (
-              <CityContainer key={city.id} to={`/${city.id}`}>
+              <CityContainer
+                key={city.id}
+                to={`/${city.id}`}
+                level={city.level}
+                bordercolor={getBorderColor(city.level, 1)}
+                backgroundcolor={getBorderColor(city.level, 0.2)}
+              >
                 <CityDescription>
                   <CityTitle>{city.name}</CityTitle>
                   <p>{city.level}</p>
@@ -97,6 +140,7 @@ const HomeSection = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin: 10px;
 `;
 
 const CitiesListContainer = styled.div`
@@ -111,10 +155,22 @@ const HomeTitle = styled.h1`
   color: grey;
 `;
 
+const ActionsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  margin: 20px;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
+`;
+
 const CityContainer = styled(Link)`
-  background-color: rgba(grey, 0.3);
-  border: 1px solid grey;
+  background-color: ${(props) => props.backgroundcolor};
   border-radius: 5px;
+  border: 2px solid ${(props) => props.bordercolor};
   display: flex;
   justify-content: space-between;
   margin: 10px;
@@ -140,4 +196,49 @@ const CityImage = styled.div`
   background-size: cover;
   height: 110px;
   width: 110px;
+`;
+
+const LeyendContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  border: 1px solid grey;
+  border-radius: 5px;
+  padding: 5px;
+  margin-bottom: 20px;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
+`;
+
+const LeyendItem = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  margin-right: 20px;
+  &:last-child {
+    margin-bottom: 0;
+    margin-right: 0;
+  }
+`;
+
+const ColorBox = styled.div`
+  background-color: ${(props) => props.colorbox};
+  width: 20px;
+  margin-right: 15px;
+  height: 20px;
+`;
+
+const LegendText = styled.p`
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  color: grey;
+  margin: 0;
+`;
+
+const HorizontalRow = styled.div`
+  border-top: 1px solid grey;
+  height: 1px;
+  width: 80%;
+  margin-bottom: 30px;
 `;
