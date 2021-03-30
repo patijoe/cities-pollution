@@ -5,7 +5,7 @@ router.get("/", function (req, res, next) {
   res.send([
     {
       id: "1",
-      level: getRandomInt(0, 11),
+      levelPollution: getRandomInt(0, 11),
       name: "Madrid",
       country: "Spain",
       coordinates: {
@@ -16,7 +16,7 @@ router.get("/", function (req, res, next) {
     },
     {
       id: "2",
-      level: getRandomInt(0, 11),
+      levelPollution: getRandomInt(0, 11),
       name: "Barcelona",
       country: "Spain",
       coordinates: {
@@ -27,7 +27,7 @@ router.get("/", function (req, res, next) {
     },
     {
       id: "3",
-      level: getRandomInt(0, 11),
+      levelPollution: getRandomInt(0, 11),
       name: "Lisbon",
       country: "Portugal",
       coordinates: {
@@ -38,7 +38,7 @@ router.get("/", function (req, res, next) {
     },
     {
       id: "4",
-      level: getRandomInt(0, 11),
+      levelPollution: getRandomInt(0, 11),
       name: "Paris",
       country: "France",
       coordinates: {
@@ -49,7 +49,7 @@ router.get("/", function (req, res, next) {
     },
     {
       id: "5",
-      level: getRandomInt(0, 11),
+      levelPollution: getRandomInt(0, 11),
       name: "Brussels",
       country: "Belgium",
       coordinates: {
@@ -60,7 +60,7 @@ router.get("/", function (req, res, next) {
     },
     {
       id: "6",
-      level: getRandomInt(0, 11),
+      levelPollution: getRandomInt(0, 11),
       name: "Bern",
       country: "Switzerland",
       coordinates: {
@@ -71,7 +71,7 @@ router.get("/", function (req, res, next) {
     },
     {
       id: "7",
-      level: getRandomInt(0, 11),
+      levelPollution: getRandomInt(0, 11),
       name: "Amsterdam",
       country: "Netherlands",
       coordinates: {
@@ -82,7 +82,7 @@ router.get("/", function (req, res, next) {
     },
     {
       id: "8",
-      level: getRandomInt(0, 11),
+      levelPollution: getRandomInt(0, 11),
       name: "Berlin",
       country: "Germany",
       coordinates: {
@@ -93,7 +93,7 @@ router.get("/", function (req, res, next) {
     },
     {
       id: "9",
-      level: getRandomInt(0, 11),
+      levelPollution: getRandomInt(0, 11),
       name: "Rome",
       country: "Italy",
       coordinates: {
@@ -104,7 +104,7 @@ router.get("/", function (req, res, next) {
     },
     {
       id: "10",
-      level: getRandomInt(0, 11),
+      levelPollution: getRandomInt(0, 11),
       name: "Prague",
       country: "Czechia",
       coordinates: {
@@ -115,7 +115,7 @@ router.get("/", function (req, res, next) {
     },
     {
       id: "11",
-      level: getRandomInt(0, 11),
+      levelPollution: getRandomInt(0, 11),
       name: "Varsovia",
       country: "Poland",
       coordinates: {
@@ -126,7 +126,7 @@ router.get("/", function (req, res, next) {
     },
     {
       id: "12",
-      level: getRandomInt(0, 11),
+      levelPollution: getRandomInt(0, 11),
       name: "Stockholm",
       country: "Sweden",
       coordinates: {
@@ -137,7 +137,7 @@ router.get("/", function (req, res, next) {
     },
     {
       id: "13",
-      level: getRandomInt(0, 11),
+      levelPollution: getRandomInt(0, 11),
       name: "Ljubljana",
       country: "Slovenia",
       coordinates: {

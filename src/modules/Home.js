@@ -28,7 +28,7 @@ export default function Home(props) {
 
   const getDescendetOrderedCities = useCallback(() => {
     const sortedCitiesList =
-      citiesList && citiesList.sort((a, b) => b.level - a.level);
+      citiesList && citiesList.sort((a, b) => b.levelPollution - a.levelPollution);
 
     const orderedTenCities = setTopTenCities(sortedCitiesList);
     return orderedTenCities;
@@ -36,7 +36,7 @@ export default function Home(props) {
 
   const getAscendetOrderedCities = useCallback(() => {
     const sortedCitiesList =
-      citiesList && citiesList.sort((a, b) => a.level - b.level);
+      citiesList && citiesList.sort((a, b) => a.levelPollution - b.levelPollution);
 
     const orderedTenCities = setTopTenCities(sortedCitiesList);
     return orderedTenCities;
@@ -111,16 +111,16 @@ export default function Home(props) {
               <CityContainer
                 key={city.id}
                 to={`/${city.id}`}
-                level={city.level}
-                bordercolor={fillCardColor(city.level, 1)}
-                backgroundcolor={fillCardColor(city.level, 0.2)}
+                level={city.levelPollution}
+                bordercolor={fillCardColor(city.levelPollution, 1)}
+                backgroundcolor={fillCardColor(city.levelPollution, 0.2)}
               >
                 <CityDescription>
                   <CityTitle>{city.name}</CityTitle>
                   <CityPollutionLevel>
                     Nivel de contaminación:
                   </CityPollutionLevel>
-                  <CityPollutionLevelText>{getPollutionLevelText(city.level)}</CityPollutionLevelText>
+                  <CityPollutionLevelText>{getPollutionLevelText(city.levelPollution)}</CityPollutionLevelText>
                 </CityDescription>
                 <CityImage imgUrl={city.image}></CityImage>
               </CityContainer>
