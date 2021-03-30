@@ -88,7 +88,8 @@ router.get("/", function (req, res, next) {
       coordinates: {
         latitude: 52.5167,
         longitude: 13.3833
-      }
+      },
+      image: "https://www.germany.travel/media/redaktion/content/staedte_kultur_content/staedte/berlin_1/Berlin_Brandenburger_Tor_am_Pariser_Platz_im_Sonnenuntergang_Leitmotiv_German_Summer_Cities.jpg"
     },
     {
       id: "9",
@@ -98,7 +99,8 @@ router.get("/", function (req, res, next) {
       coordinates: {
         latitude: 41.8931,
         longitude: 12.4828
-      }
+      },
+      image: "https://lp-cms-production.imgix.net/2019-06/GettyImages-543346435_super.jpg?auto=format&fit=crop&ixlib=react-8.6.4&h=520&w=1312"
     },
     {
       id: "10",
@@ -108,7 +110,8 @@ router.get("/", function (req, res, next) {
       coordinates: {
         latitude: 50.0833,
         longitude:14.4167
-      }
+      },
+      image: "https://i0.wp.com/jetsetbunny.com/wp-content/uploads/2020/01/Things-To-Do-In-Czechia.jpg?fit=1300%2C866&ssl=1"
     },
     {
       id: "11",
@@ -118,7 +121,30 @@ router.get("/", function (req, res, next) {
       coordinates: {
         latitude: 52.2167,
         longitude: 21.0333
-      }
+      },
+      image: "https://www.101viajes.com/sites/default/files/styles/guia-full/public/plaza-castillo-varsovia-guia.jpg"
+    },
+    {
+      id: "12",
+      level: getRandomInt(0, 11),
+      name: "Stockholm",
+      country: "Sweden",
+      coordinates: {
+        latitude: 59.3294,
+        longitude: 18.0686
+      },
+      image: "https://afar-production.imgix.net/uploads/syndication/holland_americas/images/kkMLkMAvrq/original_OPENER.esy-013560337.crop.jpg?w=750&h=563&fit=crop"
+    },
+    {
+      id: "13",
+      level: getRandomInt(0, 11),
+      name: "Ljubljana",
+      country: "Slovenia",
+      coordinates: {
+        latitude: 46.0500,
+        longitude: 14.5167
+      },
+      image: "https://www.visitljubljana.com/assets/Aktivnosti/Top-10-znamenitosti/ljubljana-castle-4.jpg"
     }
   ]);
 });
