@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-
-import {truncateArray} from '../utils/helper';
-import {legend} from '../utils/legend.values';
-
 import styled from "styled-components";
+
+import { truncateArray } from "../utils/helper";
+import { legend } from "../utils/legend.values";
+
 import Filter from "./Filter";
 import Order from "./Order";
+import Footer from "./Footer";
 
 export default function Home(props) {
   const { citiesList } = props;
@@ -28,7 +29,8 @@ export default function Home(props) {
 
   const getDescendetOrderedCities = useCallback(() => {
     const sortedCitiesList =
-      citiesList && citiesList.sort((a, b) => b.levelPollution - a.levelPollution);
+      citiesList &&
+      citiesList.sort((a, b) => b.levelPollution - a.levelPollution);
 
     const orderedTenCities = setTopTenCities(sortedCitiesList);
     return orderedTenCities;
@@ -36,7 +38,8 @@ export default function Home(props) {
 
   const getAscendetOrderedCities = useCallback(() => {
     const sortedCitiesList =
-      citiesList && citiesList.sort((a, b) => a.levelPollution - b.levelPollution);
+      citiesList &&
+      citiesList.sort((a, b) => a.levelPollution - b.levelPollution);
 
     const orderedTenCities = setTopTenCities(sortedCitiesList);
     return orderedTenCities;
@@ -79,16 +82,16 @@ export default function Home(props) {
 
   const getPollutionLevelText = (levelPollution) => {
     if (levelPollution >= 0 && levelPollution <= 3) {
-        return 'BAJO';
-      } else if (levelPollution > 3 && levelPollution <= 6) {
-        return 'MEDIO';
-      }
-      return 'ALTO';
-  }
+      return "BAJO";
+    } else if (levelPollution > 3 && levelPollution <= 6) {
+      return "MEDIO";
+    }
+    return "ALTO";
+  };
 
   return (
     <HomeSection>
-      <HomeTitle>Como estan nuestras ciudades de contaminadas?</HomeTitle>
+      <HomeTitle>Niveles de contaminación en ciudades europeas.</HomeTitle>
       <ActionsContainer>
         <Filter handleFilterName={handleFilterName} />
         <Order handleSelect={handleSelect} />
@@ -96,7 +99,7 @@ export default function Home(props) {
       <LeyendContainer>
         {legend.map((item) => {
           return (
-            <LeyendItem>
+            <LeyendItem key={item.text}>
               <ColorBox colorbox={item.color} />
               <LegendText>{item.text}</LegendText>
             </LeyendItem>
@@ -120,23 +123,27 @@ export default function Home(props) {
                   <CityPollutionLevel>
                     Nivel de contaminación:
                   </CityPollutionLevel>
-                  <CityPollutionLevelText>{getPollutionLevelText(city.levelPollution)}</CityPollutionLevelText>
+                  <CityPollutionLevelText>
+                    {getPollutionLevelText(city.levelPollution)}
+                  </CityPollutionLevelText>
                 </CityDescription>
-                <CityImage imgUrl={city.image}></CityImage>
+                <CityImage imgUrl={city.image} />
               </CityContainer>
             );
           })}
       </CitiesListContainer>
+      <Footer />
     </HomeSection>
   );
 }
 
 const HomeSection = styled.div`
   align-items: center;
+  background-color: rgb(245, 245, 245);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 10px;
+  padding: 10px;
 `;
 
 const CitiesListContainer = styled.div`
@@ -149,14 +156,15 @@ const CitiesListContainer = styled.div`
 
 const HomeTitle = styled.h1`
   color: grey;
+  text-align: center;
 `;
 
 const ActionsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  margin: 10px 20px 20px;
   width: 100%;
-  margin: 20px;
 
   @media (min-width: 768px) {
     flex-direction: row;
@@ -186,17 +194,17 @@ const CityTitle = styled.h2`
 `;
 
 const CityPollutionLevel = styled.p`
+  color: grey;
   font-family: "Roboto", sans-serif;
   font-size: 15px;
-  color: grey;
   margin: 10px 0 0;
-  `;
+`;
 
 const CityPollutionLevelText = styled(CityPollutionLevel)`
-    margin: 4px 0 0;
-    font-size: 13px;
-    font-weight: bold;
-    text-align: right;
+  font-size: 13px;
+  font-weight: bold;
+  margin: 4px 0 0;
+  text-align: right;
 `;
 
 const CityImage = styled.div`
@@ -210,11 +218,11 @@ const CityImage = styled.div`
 
 const LeyendContainer = styled.div`
   display: flex;
-  flex-direction: column;
   border: 1px solid grey;
   border-radius: 5px;
+  flex-direction: column;
   padding: 5px;
-  margin-bottom: 20px;
+  margin: 10px 0 20px;
 
   @media (min-width: 768px) {
     flex-direction: row;
@@ -222,33 +230,40 @@ const LeyendContainer = styled.div`
 `;
 
 const LeyendItem = styled.div`
-  display: flex;
   align-items: center;
-  margin-bottom: 5px;
+  display: flex;
+  margin: 5px 0;
   margin-right: 20px;
+
   &:last-child {
     margin-bottom: 0;
     margin-right: 0;
+  }
+
+  @media (min-width: 768px) {
+    &:last-child {
+      margin-bottom: 5px;
+    }
   }
 `;
 
 const ColorBox = styled.div`
   background-color: ${(props) => props.colorbox};
-  width: 20px;
-  margin-right: 15px;
   height: 20px;
+  margin-right: 15px;
+  width: 20px;
 `;
 
 const LegendText = styled.p`
+  color: grey;
   font-family: "Roboto", sans-serif;
   font-size: 14px;
-  color: grey;
   margin: 0;
 `;
 
 const HorizontalRow = styled.div`
   border-top: 1px solid grey;
   height: 1px;
-  width: 80%;
   margin-bottom: 30px;
+  width: 80%;
 `;

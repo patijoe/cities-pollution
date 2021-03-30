@@ -6,22 +6,28 @@ export default function Order(props) {
 
   return (
     <SelectComponent name="sort" onChange={handleSelect}>
-      <OptionItem value="pollution_ascendent">
+      <option value="pollution_ascendent">
         Ordena de menor a mayor contamincación
-      </OptionItem>
-      <OptionItem value="pollution_descendent">
+      </option>
+      <option value="pollution_descendent">
         Ordena de mayor a menor contamincación
-      </OptionItem>
+      </option>
     </SelectComponent>
   );
 }
 
 const SelectComponent = styled.select`
-  height: 30px;
-`;
-
-const OptionItem = styled.option`
+  background: rgb(153, 153, 153);
+  border-radius: 5px;
+  color: rgb(245, 245, 245);
+  font-weight: bold;
   font-family: "Roboto", sans-serif;
   font-size: 14px;
-  color: grey;
+  height: 30px;
+  padding: 0 5px;
+
+  &:focus {
+    outline: none;
+  }
 `;
+
