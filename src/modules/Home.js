@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 
+import {truncateArray} from '../utils/helper';
+import {legend} from '../utils/legend.values';
+
 import styled from "styled-components";
 import Filter from "./Filter";
 import Order from "./Order";
@@ -65,11 +68,7 @@ export default function Home(props) {
       : getDescendetOrderedCities();
   };
 
-  const truncateArray = (arr, length) => {
-    return arr && arr.slice(0, length);
-  };
-
-  const getBorderColor = (levelPollution, opacity) => {
+  const fillCardColor = (levelPollution, opacity) => {
     if (levelPollution >= 0 && levelPollution <= 3) {
       return `rgba(134, 226, 213, ${opacity})`;
     } else if (levelPollution > 3 && levelPollution <= 6) {
@@ -78,20 +77,14 @@ export default function Home(props) {
     return `rgba(217, 30, 24, ${opacity})`;
   };
 
-  const legend = [
-    {
-      color: "rgba(134, 226, 213, 0.3)",
-      text: "Nivel bajo de contaminación",
-    },
-    {
-      color: "rgba(250, 190, 88,  0.3)",
-      text: "Nivel medio de contaminación",
-    },
-    {
-      color: "rgba(217, 30, 24, 0.3)",
-      text: "Nivel alto de contaminación",
-    },
-  ];
+  const getPollutionLevelText = (levelPollution) => {
+    if (levelPollution >= 0 && levelPollution <= 3) {
+        return 'BAJO';
+      } else if (levelPollution > 3 && levelPollution <= 6) {
+        return 'MEDIO';
+      }
+      return 'ALTO';
+  }
 
   return (
     <HomeSection>
@@ -119,12 +112,15 @@ export default function Home(props) {
                 key={city.id}
                 to={`/${city.id}`}
                 level={city.level}
-                bordercolor={getBorderColor(city.level, 1)}
-                backgroundcolor={getBorderColor(city.level, 0.2)}
+                bordercolor={fillCardColor(city.level, 1)}
+                backgroundcolor={fillCardColor(city.level, 0.2)}
               >
                 <CityDescription>
                   <CityTitle>{city.name}</CityTitle>
-                  <p>{city.level}</p>
+                  <CityPollutionLevel>
+                    Nivel de contaminación:
+                  </CityPollutionLevel>
+                  <CityPollutionLevelText>{getPollutionLevelText(city.level)}</CityPollutionLevelText>
                 </CityDescription>
                 <CityImage imgUrl={city.image}></CityImage>
               </CityContainer>
@@ -187,6 +183,20 @@ const CityDescription = styled.div`
 const CityTitle = styled.h2`
   color: grey;
   margin: 0;
+`;
+
+const CityPollutionLevel = styled.p`
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
+  color: grey;
+  margin: 10px 0 0;
+  `;
+
+const CityPollutionLevelText = styled(CityPollutionLevel)`
+    margin: 4px 0 0;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: right;
 `;
 
 const CityImage = styled.div`
