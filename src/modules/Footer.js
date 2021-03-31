@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <FooterSection>
       <Description>
-        <DesciptionText> Made with</DesciptionText>
+        <DesciptionText> made with</DesciptionText>
         <Image
           src="https://www.pngfind.com/pngs/m/56-562383_corazon-png-whatsapp-heart-emoji-cut-out-transparent.png"
           alt="corazón rojo"

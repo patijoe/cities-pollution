@@ -7,6 +7,9 @@ function CityMap(props) {
     const cityId = props.match.params.cityId;
     
     const citySelected = citiesList.find(city => city.id === cityId);
+    const mapClicked = (mapProps, map, clickEvent) => {
+        console.log('>>>>>>>>>><PACO');
+      }
 
     return(
         <Map 
@@ -18,7 +21,8 @@ function CityMap(props) {
               }}
         >
             <Marker 
-                position={{ lat: citySelected.coordinates.latitude, lng: citySelected.coordinates.longitude }} 
+                position={{ lat: citySelected.coordinates.latitude, lng: citySelected.coordinates.longitude }}
+                onClick={mapClicked}
             />
       </Map>
     )

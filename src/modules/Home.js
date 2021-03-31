@@ -15,7 +15,7 @@ export default function Home(props) {
   const [filteredName, setFilteredName] = useState("");
   const [optionSelected, setOptionSelected] = useState("pollution_ascendent");
 
-  const setTopTenCities = useCallback(
+  const getTopTenCities = useCallback(
     (unfilteredCities) => {
       const filteredCities = unfilteredCities.filter((item) =>
         item.name.toUpperCase().includes(filteredName.toUpperCase())
@@ -32,18 +32,18 @@ export default function Home(props) {
       citiesList &&
       citiesList.sort((a, b) => b.levelPollution - a.levelPollution);
 
-    const orderedTenCities = setTopTenCities(sortedCitiesList);
+    const orderedTenCities = getTopTenCities(sortedCitiesList);
     return orderedTenCities;
-  }, [citiesList, setTopTenCities]);
+  }, [citiesList, getTopTenCities]);
 
   const getAscendetOrderedCities = useCallback(() => {
     const sortedCitiesList =
       citiesList &&
       citiesList.sort((a, b) => a.levelPollution - b.levelPollution);
 
-    const orderedTenCities = setTopTenCities(sortedCitiesList);
+    const orderedTenCities = getTopTenCities(sortedCitiesList);
     return orderedTenCities;
-  }, [citiesList, setTopTenCities]);
+  }, [citiesList, getTopTenCities]);
 
   useEffect(() => {
     if (optionSelected === "pollution_ascendent") {
@@ -142,6 +142,7 @@ const HomeSection = styled.div`
   background-color: rgb(245, 245, 245);
   display: flex;
   flex-direction: column;
+  height: 100vh;
   justify-content: center;
   padding: 10px;
 `;

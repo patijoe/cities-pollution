@@ -9,6 +9,15 @@ export default function App() {
   const [citiesList, setCitiesList] = useState([]);
 
   useEffect(() => {
+    const getCities = () => {
+      fetch(CITIES_API)
+        .then((response) => response.json())
+        .then((response) => {
+          setCitiesList(response);
+        });
+        
+    };
+    
     getCities();
 
     const interval = setInterval(() => {
@@ -18,14 +27,7 @@ export default function App() {
     return () => clearInterval(interval);
   }, []);
 
-  const getCities = () => {
-    fetch(CITIES_API)
-      .then((response) => response.json())
-      .then((response) => {
-        setCitiesList(response);
-      });
-      
-  };
+  
 
   return (
     citiesList.length && <BrowserRouter>

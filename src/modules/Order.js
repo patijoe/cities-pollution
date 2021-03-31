@@ -7,10 +7,10 @@ export default function Order(props) {
   return (
     <SelectComponent name="sort" onChange={handleSelect}>
       <option value="pollution_ascendent">
-        Ordena de menor a mayor contamincación
+        Ordena de menor a mayor contaminación
       </option>
       <option value="pollution_descendent">
-        Ordena de mayor a menor contamincación
+        Ordena de mayor a menor contaminación
       </option>
     </SelectComponent>
   );
