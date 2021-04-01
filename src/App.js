@@ -17,14 +17,14 @@ export default function App() {
         });
         
     };
-
+    
     getCities();
 
-    // const interval = setInterval(() => {
-    //   getCities();
-    // }, INTERVAL_SECONDS);
+    const interval = setInterval(() => {
+      getCities();
+    }, INTERVAL_SECONDS);
 
-    // return () => clearInterval(interval);
+    return () => clearInterval(interval);
   }, []);
 
   
