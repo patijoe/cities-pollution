@@ -18,7 +18,7 @@ export default function Footer() {
 const FooterSection = styled.div`
   border-top: 1px solid grey;
   height: 1px;
-  margin: 30px 0;
+  margin: 30px 0 0;
   width: 80%;
 `;
 

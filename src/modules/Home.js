@@ -139,11 +139,8 @@ export default function Home(props) {
 
 const HomeSection = styled.div`
   align-items: center;
-  background-color: rgb(245, 245, 245);
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  justify-content: center;
   padding: 10px;
 `;
 
