@@ -12,7 +12,11 @@ export default function Filter(props) {
   );
 }
 const FilterContainer = styled.div`
-  margin: 0 30px 15px 30px;
+  margin: 0 0 15px;
+
+  @media (min-width: 360px) {
+    margin: 0 25px 15px 25px;
+  }
 `;
 
 const LabelInput = styled.label`

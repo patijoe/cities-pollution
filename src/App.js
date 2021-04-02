@@ -3,7 +3,7 @@ import { Switch, Route, BrowserRouter } from "react-router-dom";
 import { CITIES_API } from "./services";
 import { INTERVAL_SECONDS } from "./utils/constants";
 import Home from "./modules/Home";
-import CityDetails from './modules/CityDetails';
+import CityDetails from './modules/map/CityDetails';
 
 export default function App() {
   const [citiesList, setCitiesList] = useState([]);
