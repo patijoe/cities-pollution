@@ -1,33 +1,35 @@
-import React from 'react';
-import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
+import React from "react";
+import { Link } from "react-router-dom";
+import CityMap from "./CityMap";
 
+import styled from "styled-components";
 
-function CityMap(props) {
-    const {citiesList} = props;
-    const cityId = props.match.params.cityId;
-    
-    const citySelected = citiesList.find(city => city.id === cityId);
-    const mapClicked = (mapProps, map, clickEvent) => {
-        console.log('>>>>>>>>>><PACO');
-      }
+export default function CityDetails(props) {
+  const { citiesList } = props;
+  const cityId = props.match.params.cityId;
 
-    return(
-        <Map 
-            google={props.google} 
-            zoom={8}
-            initialCenter={{
-                lat: citySelected.coordinates.latitude,
-                lng: citySelected.coordinates.longitude
-              }}
-        >
-            <Marker 
-                position={{ lat: citySelected.coordinates.latitude, lng: citySelected.coordinates.longitude }}
-                onClick={mapClicked}
-            />
-      </Map>
-    )
+  return (
+    <>
+      <BackButtonContianer>
+        <BackButton to="/">VOLVER</BackButton>
+      </BackButtonContianer>
+      <CityMap citiesList={citiesList} cityId={cityId} />
+    </>
+  );
 }
 
-export default GoogleApiWrapper({
-      apiKey: 'AIzaSyCA5VdzPX8Vp5kmJscmfNRCOqIT7j0U9Mg'
-})(CityMap)
+const BackButtonContianer = styled.div`
+  background-color: rgb(245, 245, 245);
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1;
+`;
+
+const BackButton = styled(Link)`
+  color: #404040;
+  text-decoration: none;
+`;
