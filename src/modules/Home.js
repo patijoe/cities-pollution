@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-
 import styled from "styled-components";
+
+import { truncateArray } from "../utils/helper";
+import { legend } from "../utils/legend.values";
+
 import Filter from "./Filter";
 import Order from "./Order";
+import Footer from "./Footer";
 
 export default function Home(props) {
   const { citiesList } = props;
@@ -11,7 +15,7 @@ export default function Home(props) {
   const [filteredName, setFilteredName] = useState("");
   const [optionSelected, setOptionSelected] = useState("pollution_ascendent");
 
-  const setTopTenCities = useCallback(
+  const getTopTenCities = useCallback(
     (unfilteredCities) => {
       const filteredCities = unfilteredCities.filter((item) =>
         item.name.toUpperCase().includes(filteredName.toUpperCase())
@@ -25,19 +29,21 @@ export default function Home(props) {
 
   const getDescendetOrderedCities = useCallback(() => {
     const sortedCitiesList =
-      citiesList && citiesList.sort((a, b) => b.level - a.level);
+      citiesList &&
+      citiesList.sort((a, b) => b.levelPollution - a.levelPollution);
 
-    const orderedTenCities = setTopTenCities(sortedCitiesList);
+    const orderedTenCities = getTopTenCities(sortedCitiesList);
     return orderedTenCities;
-  }, [citiesList, setTopTenCities]);
+  }, [citiesList, getTopTenCities]);
 
   const getAscendetOrderedCities = useCallback(() => {
     const sortedCitiesList =
-      citiesList && citiesList.sort((a, b) => a.level - b.level);
+      citiesList &&
+      citiesList.sort((a, b) => a.levelPollution - b.levelPollution);
 
-    const orderedTenCities = setTopTenCities(sortedCitiesList);
+    const orderedTenCities = getTopTenCities(sortedCitiesList);
     return orderedTenCities;
-  }, [citiesList, setTopTenCities]);
+  }, [citiesList, getTopTenCities]);
 
   useEffect(() => {
     if (optionSelected === "pollution_ascendent") {
@@ -65,11 +71,7 @@ export default function Home(props) {
       : getDescendetOrderedCities();
   };
 
-  const truncateArray = (arr, length) => {
-    return arr && arr.slice(0, length);
-  };
-
-  const getBorderColor = (levelPollution, opacity) => {
+  const fillCardColor = (levelPollution, opacity) => {
     if (levelPollution >= 0 && levelPollution <= 3) {
       return `rgba(134, 226, 213, ${opacity})`;
     } else if (levelPollution > 3 && levelPollution <= 6) {
@@ -78,24 +80,18 @@ export default function Home(props) {
     return `rgba(217, 30, 24, ${opacity})`;
   };
 
-  const legend = [
-    {
-      color: "rgba(134, 226, 213, 0.3)",
-      text: "Nivel bajo de contaminación",
-    },
-    {
-      color: "rgba(250, 190, 88,  0.3)",
-      text: "Nivel medio de contaminación",
-    },
-    {
-      color: "rgba(217, 30, 24, 0.3)",
-      text: "Nivel alto de contaminación",
-    },
-  ];
+  const getPollutionLevelText = (levelPollution) => {
+    if (levelPollution >= 0 && levelPollution <= 3) {
+      return "BAJO";
+    } else if (levelPollution > 3 && levelPollution <= 6) {
+      return "MEDIO";
+    }
+    return "ALTO";
+  };
 
   return (
     <HomeSection>
-      <HomeTitle>Como estan nuestras ciudades de contaminadas?</HomeTitle>
+      <HomeTitle>Niveles de contaminación en ciudades europeas.</HomeTitle>
       <ActionsContainer>
         <Filter handleFilterName={handleFilterName} />
         <Order handleSelect={handleSelect} />
@@ -103,7 +99,7 @@ export default function Home(props) {
       <LeyendContainer>
         {legend.map((item) => {
           return (
-            <LeyendItem>
+            <LeyendItem key={item.text}>
               <ColorBox colorbox={item.color} />
               <LegendText>{item.text}</LegendText>
             </LeyendItem>
@@ -118,19 +114,25 @@ export default function Home(props) {
               <CityContainer
                 key={city.id}
                 to={`/${city.id}`}
-                level={city.level}
-                bordercolor={getBorderColor(city.level, 1)}
-                backgroundcolor={getBorderColor(city.level, 0.2)}
+                level={city.levelPollution}
+                bordercolor={fillCardColor(city.levelPollution, 1)}
+                backgroundcolor={fillCardColor(city.levelPollution, 0.2)}
               >
                 <CityDescription>
                   <CityTitle>{city.name}</CityTitle>
-                  <p>{city.level}</p>
+                  <CityPollutionLevel>
+                    Nivel de contaminación:
+                  </CityPollutionLevel>
+                  <CityPollutionLevelText>
+                    {getPollutionLevelText(city.levelPollution)}
+                  </CityPollutionLevelText>
                 </CityDescription>
-                <CityImage imgUrl={city.image}></CityImage>
+                <CityImage imgUrl={city.image} />
               </CityContainer>
             );
           })}
       </CitiesListContainer>
+      <Footer />
     </HomeSection>
   );
 }
@@ -139,8 +141,7 @@ const HomeSection = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  margin: 10px;
+  padding: 10px;
 `;
 
 const CitiesListContainer = styled.div`
@@ -153,14 +154,15 @@ const CitiesListContainer = styled.div`
 
 const HomeTitle = styled.h1`
   color: grey;
+  text-align: center;
 `;
 
 const ActionsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  margin: 10px 20px 20px;
   width: 100%;
-  margin: 20px;
 
   @media (min-width: 768px) {
     flex-direction: row;
@@ -189,6 +191,20 @@ const CityTitle = styled.h2`
   margin: 0;
 `;
 
+const CityPollutionLevel = styled.p`
+  color: grey;
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
+  margin: 10px 0 0;
+`;
+
+const CityPollutionLevelText = styled(CityPollutionLevel)`
+  font-size: 13px;
+  font-weight: bold;
+  margin: 4px 0 0;
+  text-align: right;
+`;
+
 const CityImage = styled.div`
   background-image: ${(props) => `url(${props.imgUrl})`};
   background-position: center;
@@ -200,11 +216,11 @@ const CityImage = styled.div`
 
 const LeyendContainer = styled.div`
   display: flex;
-  flex-direction: column;
   border: 1px solid grey;
   border-radius: 5px;
+  flex-direction: column;
   padding: 5px;
-  margin-bottom: 20px;
+  margin: 10px 0 20px;
 
   @media (min-width: 768px) {
     flex-direction: row;
@@ -212,33 +228,40 @@ const LeyendContainer = styled.div`
 `;
 
 const LeyendItem = styled.div`
-  display: flex;
   align-items: center;
-  margin-bottom: 5px;
+  display: flex;
+  margin: 5px 0;
   margin-right: 20px;
+
   &:last-child {
     margin-bottom: 0;
     margin-right: 0;
+  }
+
+  @media (min-width: 768px) {
+    &:last-child {
+      margin-bottom: 5px;
+    }
   }
 `;
 
 const ColorBox = styled.div`
   background-color: ${(props) => props.colorbox};
-  width: 20px;
-  margin-right: 15px;
   height: 20px;
+  margin-right: 15px;
+  width: 20px;
 `;
 
 const LegendText = styled.p`
+  color: grey;
   font-family: "Roboto", sans-serif;
   font-size: 14px;
-  color: grey;
   margin: 0;
 `;
 
 const HorizontalRow = styled.div`
   border-top: 1px solid grey;
   height: 1px;
-  width: 80%;
   margin-bottom: 30px;
+  width: 80%;
 `;

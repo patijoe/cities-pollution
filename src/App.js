@@ -3,12 +3,21 @@ import { Switch, Route, BrowserRouter } from "react-router-dom";
 import { CITIES_API } from "./services";
 import { INTERVAL_SECONDS } from "./utils/constants";
 import Home from "./modules/Home";
-import CityDetails from './modules/CityDetails';
+import CityDetails from './modules/map/CityDetails';
 
 export default function App() {
   const [citiesList, setCitiesList] = useState([]);
 
   useEffect(() => {
+    const getCities = () => {
+      fetch(CITIES_API)
+        .then((response) => response.json())
+        .then((response) => {
+          setCitiesList(response);
+        });
+        
+    };
+    
     getCities();
 
     const interval = setInterval(() => {
@@ -18,14 +27,7 @@ export default function App() {
     return () => clearInterval(interval);
   }, []);
 
-  const getCities = () => {
-    fetch(CITIES_API)
-      .then((response) => response.json())
-      .then((response) => {
-        setCitiesList(response);
-      });
-      
-  };
+  
 
   return (
     citiesList.length && <BrowserRouter>
