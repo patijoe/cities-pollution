@@ -25,7 +25,7 @@ Este proyecto se inició con [Create React App](https://github.com/facebook/crea
 Para instalar el front, hacer `npm install`, desde la raiz del proyecto.
 
 ## Para arrancar
-Para arrancar la aplicación, desde la raíz, `npm start`.\
+Para arrancar la aplicación, desde la raíz del proyecto, `npm start`.\
 Para visualizarse en el browser, abre [http://localhost:3000](http://localhost:3000).\
 La página se refresca al hacer cambios en el código.
 
