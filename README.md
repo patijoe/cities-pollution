@@ -19,8 +19,7 @@ El servidor estará corriendo en [http://localhost:9000](http://localhost:9000).
 
 # Front
 
-Este proyecto se inició con [Create React App](https://github.com/facebook/create-react-app).\
-Desde la raiz del proyecto, npm install.
+Este proyecto se inició con [Create React App](https://github.com/facebook/create-react-app).
 
 ## Para instalar
 Para instalar el front, hacer `npm install`, desde la raiz del proyecto.
